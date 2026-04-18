@@ -84,8 +84,8 @@ n ()
     fi
 }
 
-ZSH_HIGHLIGHT_STYLES[path]=none
-ZSH_HIGHLIGHT_STYLES[path_prefix]=none
+FAST_HIGHLIGHT_STYLES[path]=none
+FAST_HIGHLIGHT_STYLES[path-prefix]=none
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
