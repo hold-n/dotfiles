@@ -1,0 +1,35 @@
+[user]
+	email = mffarafo@amazon.com
+	name = Max Farafonov
+[color]
+	ui = auto
+[core]
+	pager = less -FMRiX
+[push]
+	default = simple
+[alias]
+	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+	s = status
+	l = log --graph --decorate --oneline --all
+	last = log -1 HEAD
+	co = checkout
+	fo = fetch origin --progress --prune
+	su = submodule update
+	po = pull origin --ff-only
+	la = log --graph --decorate --all --pretty=format:'%an - %s'
+	b = branch
+	f = fetch
+	fod = fetch origin develop --progress
+	mod = merge origin/develop --ff-only
+	rod = rebase origin/develop
+	cod = checkout develop
+	cp = cherry-pick
+	mu = merge @{u} --ff-only
+	ru = rebase @{u}
+	cpc = cherry-pick --continue
+	review = log --pretty='%h: %B' --first-parent --no-merges --reverse
+	rbc = rebase --continue
+[diff]
+	; external = difft
+[init]
+	defaultBranch = main
