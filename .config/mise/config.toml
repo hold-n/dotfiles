@@ -1,0 +1,11 @@
+[tools]
+go = "latest"
+java = "openjdk-21"
+node = ["latest", "20.17.0"]
+python = ["latest", "3.12", "3.11"]
+ruby = "latest"
+
+[settings]
+
+[settings.ruby]
+compile = false
