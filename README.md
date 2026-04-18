@@ -1,11 +1,21 @@
 A collection of personal config files.
 
-This repo includes submodules for plugins. Make sure to clone with `--recursive`.
+## Setup
 
-The structure is modeled after a home directory. Add symlinks to the corresponding paths in this repo, for
-example:
+This repo includes submodules for third-party pluginsm, so make sure to clone with `--recursive`.
+
+```bash
+git clone --recursive https://github.com/hold-n/dotfiles.git ~/dotfiles
+~/dotfiles/setup.sh
+```
+
+The setup script symlinks all files into `$HOME`, initializes submodules, and backs up any existing files to `~/.dotfiles-backup/`.
+
+## Manual linking
+
+The repo structure mirrors the home directory. You can also link individual files:
 
 ```bash
 ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.config/nvim ~/.config/nvim
+ln -s ~/dotfiles/.config/ghostty ~/.config/ghostty
 ```
