@@ -78,9 +78,7 @@ plugins=(
   aws
   colorize
   git
-  python
-  timer
-  zsh-syntax-highlighting
+  fast-syntax-highlighting
   zsh-vim-mode
 )
 
