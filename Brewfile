@@ -42,6 +42,7 @@ brew "uv"
 brew "vifm"
 brew "wget"
 brew "z"
+brew "tree-sitter-cli"
 
 cask "alt-tab"
 cask "dbeaver-community"
