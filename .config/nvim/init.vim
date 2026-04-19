@@ -131,7 +131,6 @@ endif
 set updatetime=250
 set scrolloff=5
 set splitbelow
-set lazyredraw
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
