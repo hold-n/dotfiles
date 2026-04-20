@@ -42,6 +42,11 @@ if !exists('g:vscode')
     copen
     cc
   endfunction
+  function! s:sync_bat_theme()
+    let $BAT_THEME = &background ==# 'light' ? 'GitHub' : 'Monokai Extended'
+  endfunction
+  autocmd OptionSet background call s:sync_bat_theme()
+  call s:sync_bat_theme()
   let $FZF_DEFAULT_OPTS='--reverse --bind ctrl-a:select-all'
   let g:fzf_action = {
     \ 'ctrl-q': function('s:build_quickfix_list'),
