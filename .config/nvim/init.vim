@@ -58,14 +58,13 @@ if !exists('g:vscode')
       let g:rg_derive_root='true'
   endif
 
-  " --- Git ---
-  Plug 'tpope/vim-fugitive'
-  source $HOME/.config/nvim/fugitive-gitfarm.vim
-
   " --- Misc ---
   Plug 'mbbill/undotree'
   Plug 'shime/vim-livedown'
 endif
+
+" --- Git ---
+Plug 'tpope/vim-fugitive'
 
 " --- Treesitter ---
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': 'main'}
@@ -84,6 +83,8 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'kongo2002/fsharp-vim'
 
 call plug#end()
+
+source $HOME/.config/nvim/fugitive-gitfarm.vim
 
 " =============================================================================
 " Appearance
