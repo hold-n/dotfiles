@@ -28,7 +28,7 @@ if !exists('g:vscode')
   let g:indent_guides_enable_on_vim_startup = 1
   let g:indent_guides_guide_size = 1
   let g:indent_guides_start_level = 2
-  Plug 'jmckiern/vim-venter'
+  Plug 'shortcuts/no-neck-pain.nvim'
   Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 
   " --- File navigation ---
@@ -314,5 +314,8 @@ vim.keymap.set('n', '<C-b>', '<Cmd>BufferLinePick<CR>')
 
 -- Lualine
 require('lualine').setup()
+
+require('no-neck-pain').setup({ width = 160, buffers = { right = { enabled = false } } })
+vim.keymap.set('n', '<leader>np', '<Cmd>NoNeckPain<CR>')
 EOF
 endif
