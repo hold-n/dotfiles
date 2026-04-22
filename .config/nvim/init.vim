@@ -57,10 +57,19 @@ if !exists('g:vscode')
   if executable('rg')
       let g:rg_derive_root='true'
   endif
+  nnoremap <C-p> :GFiles<CR>
+  vnoremap <leader>fs "zy:BLines! <C-R>z<CR>
+  vnoremap <leader>ws "zy:Rg! <C-R>z<CR>
+  nnoremap <leader>ws :Rg <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <leader>fs :BLines!<CR>
+  nnoremap <leader>gs :Rg!<CR>
+  nnoremap <leader>fc :Commands!<CR>
 
   " --- Misc ---
   Plug 'mbbill/undotree'
+  nnoremap <leader>u :UndotreeToggle<CR>
   Plug 'shime/vim-livedown'
+  nnoremap <leader>md :LivedownToggle<CR>
 endif
 
 " --- Git ---
@@ -77,6 +86,10 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'svermeulen/vim-cutlass'
+nnoremap x d
+xnoremap x d
+nnoremap xx dd
+nnoremap X D
 Plug 'michaeljsmith/vim-indent-object'
 
 " --- Misc ---
@@ -172,30 +185,9 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 if !exists('g:vscode')
-  " --- FZF ---
-  nnoremap <C-p> :GFiles<CR>
-  vnoremap <leader>fs "zy:BLines! <C-R>z<CR>
-  vnoremap <leader>ws "zy:Rg! <C-R>z<CR>
-  nnoremap <leader>ws :Rg <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <leader>fs :BLines!<CR>
-  nnoremap <leader>gs :Rg!<CR>
-  nnoremap <leader>fc :Commands!<CR>
-
   " --- Buffers ---
   nnoremap <leader>qb :bnext\|bdelete #<CR>
   nnoremap <C-n> :Buffers<CR>
-endif
-
-" --- Cutlass (x = cut) ---
-nnoremap x d
-xnoremap x d
-nnoremap xx dd
-nnoremap X D
-
-if !exists('g:vscode')
-  " --- Plugins ---
-  nnoremap <leader>u :UndotreeToggle<CR>
-  nnoremap <leader>md :LivedownToggle<CR>
 endif
 
 " --- Editing ---
@@ -215,12 +207,12 @@ nnoremap <silent><leader>json :%!python3 -m json.tool<CR>
 vnoremap <silent><leader>json :'<,'>!python3 -m json.tool<CR>
 
 " =============================================================================
-" LSP, Treesitter & Plugin configs (lua)
+" Plugin configs (lua)
 " =============================================================================
 
 if !exists('g:vscode')
 lua << EOF
--- LSP servers
+-- LSP
 vim.lsp.config('ts_ls', {
   cmd = { 'typescript-language-server', '--stdio' },
   filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
@@ -238,8 +230,6 @@ vim.lsp.config('pyright', {
   end,
 })
 vim.lsp.enable({'ts_ls', 'pyright'})
-
--- LSP keymaps & completion
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
@@ -256,7 +246,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Treesitter
 require('nvim-treesitter').setup()
 require('nvim-treesitter').install({ 'python', 'typescript', 'javascript', 'java', 'lua', 'vim', 'vimdoc', 'markdown', 'bash', 'json', 'yaml' })
-
 local ts_filetypes = { 'python', 'typescript', 'typescriptreact', 'javascript', 'javascriptreact', 'java', 'lua', 'vim', 'markdown', 'bash', 'json', 'yaml' }
 vim.api.nvim_create_autocmd('FileType', {
   pattern = ts_filetypes,
@@ -265,13 +254,10 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 })
-
--- Treesitter textobjects
 require('nvim-treesitter-textobjects').setup({
   select = { lookahead = true },
   move = { set_jumps = true },
 })
-
 vim.keymap.set({ 'x', 'o' }, 'af', function()
   require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects')
 end)
@@ -315,6 +301,7 @@ vim.keymap.set('n', '<C-b>', '<Cmd>BufferLinePick<CR>')
 -- Lualine
 require('lualine').setup()
 
+-- No Neck Pain
 require('no-neck-pain').setup({ width = 160, buffers = { right = { enabled = false } } })
 vim.keymap.set('n', '<leader>np', '<Cmd>NoNeckPain<CR>')
 EOF
