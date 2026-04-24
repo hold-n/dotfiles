@@ -105,7 +105,7 @@ source $HOME/.config/nvim/fugitive-gitfarm.vim
 
 if !exists('g:vscode')
   set termguicolors
-  set background=dark
+  set background=light
   colorscheme alabaster
   syntax enable
   set number relativenumber
@@ -302,7 +302,23 @@ vim.keymap.set('n', '<C-b>', '<Cmd>BufferLinePick<CR>')
 require('lualine').setup()
 
 -- No Neck Pain
-require('no-neck-pain').setup({ width = 160, buffers = { right = { enabled = false } } })
+local nnp_profiles = {
+  coding = { width = 160, buffers = { right = { enabled = false }, left = { enabled = true } }, integrations = { undotree = { position = "left" } } },
+  notes  = { width = 110,  buffers = { right = { enabled = true },  left = { enabled = true } }, integrations = { undotree = { position = "left" } } },
+}
+local function nnp_apply(name)
+  local cfg = nnp_profiles[name]
+  if not cfg then return end
+  local nnp = require('no-neck-pain')
+  vim.cmd('NoNeckPain')
+  nnp.setup(cfg)
+  vim.cmd('NoNeckPain')
+end
+vim.api.nvim_create_user_command('NNPCoding', function() nnp_apply('coding') end, {})
+vim.api.nvim_create_user_command('NNPNotes',  function() nnp_apply('notes') end, {})
+require('no-neck-pain').setup(nnp_profiles.coding)
 vim.keymap.set('n', '<leader>np', '<Cmd>NoNeckPain<CR>')
+vim.keymap.set('n', '<leader>nc', '<Cmd>NNPCoding<CR>')
+vim.keymap.set('n', '<leader>nn', '<Cmd>NNPNotes<CR>')
 EOF
 endif
