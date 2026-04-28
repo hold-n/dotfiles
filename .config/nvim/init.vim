@@ -33,37 +33,15 @@ if !exists('g:vscode')
 
   " --- File navigation ---
   Plug 'airblade/vim-rooter'
+  Plug 'stevearc/oil.nvim'
 
-  " --- FZF ---
+  " --- FFF ---
+  Plug 'dmtrKovalenko/fff.nvim'
+
+  " --- FZF (buffers only) ---
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
-  function! s:build_quickfix_list(lines)
-    call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-    copen
-    cc
-  endfunction
-  function! s:sync_bat_theme()
-    let $BAT_THEME = &background ==# 'light' ? 'GitHub' : 'Monokai Extended'
-  endfunction
-  autocmd OptionSet background call s:sync_bat_theme()
-  call s:sync_bat_theme()
-  let $FZF_DEFAULT_OPTS='--reverse --bind ctrl-a:select-all'
-  let g:fzf_action = {
-    \ 'ctrl-q': function('s:build_quickfix_list'),
-    \ 'ctrl-t': 'tab split',
-    \ 'ctrl-s': 'split',
-    \ 'ctrl-v': 'vsplit'
-    \}
-  if executable('rg')
-      let g:rg_derive_root='true'
-  endif
-  nnoremap <C-p> :GFiles<CR>
-  vnoremap <leader>fs "zy:BLines! <C-R>z<CR>
-  vnoremap <leader>ws "zy:Rg! <C-R>z<CR>
-  nnoremap <leader>ws :Rg <C-R>=expand("<cword>")<CR><CR>
-  nnoremap <leader>fs :BLines!<CR>
-  nnoremap <leader>gs :Rg!<CR>
-  nnoremap <leader>fc :Commands!<CR>
+  nnoremap <C-n> :Buffers<CR>
 
   " --- Misc ---
   Plug 'mbbill/undotree'
@@ -138,7 +116,6 @@ set foldlevel=9999
 
 set ignorecase
 set smartcase
-set inccommand=split
 if !exists('g:vscode')
     set hlsearch
 endif
@@ -322,7 +299,7 @@ require('lualine').setup()
 -- No Neck Pain
 local nnp_profiles = {
   coding = { width = 160, buffers = { right = { enabled = false }, left = { enabled = true } }, integrations = { undotree = { position = "left" } } },
-  notes  = { width = 110,  buffers = { right = { enabled = true },  left = { enabled = true } }, integrations = { undotree = { position = "left" } } },
+  notes  = { width = 120,  buffers = { right = { enabled = true },  left = { enabled = true } }, integrations = { undotree = { position = "left" } } },
 }
 local function nnp_apply(name)
   local cfg = nnp_profiles[name]
