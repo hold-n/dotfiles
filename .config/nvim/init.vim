@@ -277,6 +277,24 @@ vim.keymap.set({ 'n', 'x', 'o' }, '[m', function()
   require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects')
 end)
 
+-- Oil
+require('oil').setup()
+vim.keymap.set('n', '-', '<CMD>Oil<CR>')
+
+-- FFF
+local fff_dl = require('fff.download')
+if not vim.uv.fs_stat(fff_dl.get_binary_path()) then
+  fff_dl.download_or_build_binary()
+end
+require('fff').setup()
+vim.keymap.set('n', '<C-p>', function() require('fff').find_files() end)
+vim.keymap.set('n', '<leader>gs', function() require('fff').live_grep() end)
+vim.keymap.set('n', '<leader>ws', function() require('fff').live_grep({ query = vim.fn.expand('<cword>') }) end)
+vim.keymap.set('v', '<leader>ws', function()
+  vim.cmd('noau normal! "zy')
+  require('fff').live_grep({ query = vim.fn.getreg('z') })
+end)
+
 -- Bufferline
 require('bufferline').setup({
   options = {
