@@ -57,7 +57,7 @@ keybind = cmd+l=goto_split:right
 
 keybind = global:ctrl+space=toggle_visibility
 window-theme = light
-macos-titlebar-style = native
+macos-titlebar-style = tabs
 split-divider-color = #d1d1d1
 unfocused-split-fill = #ffffff
 unfocused-split-opacity = 0.8
