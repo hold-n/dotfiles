@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+shopt -s nullglob
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/.dotfiles-backup/$(date +%Y%m%d_%H%M%S)"
@@ -21,9 +22,10 @@ backup_and_link() {
       echo "  skip (already linked): $dest"
       return
     fi
-    mkdir -p "$BACKUP_DIR"
-    mv "$dest" "$BACKUP_DIR/"
-    echo "  backed up: $dest -> $BACKUP_DIR/"
+    local backup_dest="$BACKUP_DIR/$(dirname "${dest#$HOME/}")"
+    mkdir -p "$backup_dest"
+    mv "$dest" "$backup_dest/"
+    echo "  backed up: $dest -> $backup_dest/"
   fi
 
   mkdir -p "$(dirname "$dest")"
@@ -33,7 +35,7 @@ backup_and_link() {
 
 is_submodule() {
   local path="$1"
-  git -C "$DOTFILES_DIR" submodule status "$path" &>/dev/null
+  git -C "$DOTFILES_DIR" submodule status "$path" 2>/dev/null | grep -q .
 }
 
 link_recursive() {
