@@ -1,5 +1,5 @@
 [user]
-	email = mffarafo@amazon.com
+	email = github@holdn.me
 	name = Max Farafonov
 [color]
 	ui = auto
@@ -33,3 +33,11 @@
 	; external = difft
 [init]
 	defaultBranch = main
+[credential "https://github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/usr/bin/gh auth git-credential
+[include]
+    path = ~/.gitconfig-local
