@@ -14,16 +14,18 @@ alias bbb="brazil-recursive-cmd --allPackages brazil-build"
 alias kiro="kiro-cli"
 alias pi='AWS_PROFILE=personal-bedrock AWS_REGION=eu-west-1 pi'
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-. $HOMEBREW_PREFIX/etc/profile.d/z.sh
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    [[ -f "$HOMEBREW_PREFIX/etc/profile.d/z.sh" ]] && . "$HOMEBREW_PREFIX/etc/profile.d/z.sh"
+fi
 
 export EDITOR=nvim
 export PATH=$HOME/.toolbox/bin:$PATH
 export JAVA_TOOLS_OPTIONS="-Dlog4j2.formatMsgNoLookups=true"
 export NVM_DIR="$HOME/.nvm"
 
-. "$HOME/.local/bin/env"
-. "$HOME/.atuin/bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
+[[ -f "$HOME/.atuin/bin/env" ]] && . "$HOME/.atuin/bin/env"
 
 autoload zmv
 
@@ -94,8 +96,8 @@ FAST_HIGHLIGHT_STYLES[path-prefix]=none
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-eval "$(atuin init zsh)"
-eval "$(mise activate zsh)"
+(( $+commands[atuin] )) && eval "$(atuin init zsh)"
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
