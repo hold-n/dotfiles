@@ -195,36 +195,38 @@ vnoremap <silent><leader>json :'<,'>!python3 -m json.tool<CR>
 
 if !exists('g:vscode')
 lua << EOF
--- LSP
-vim.lsp.config('ts_ls', {
-  cmd = { 'typescript-language-server', '--stdio' },
-  filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-  root_markers = { 'tsconfig.json', 'package.json', '.git' },
-  on_attach = function(client, bufnr)
-    vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-  end,
-})
-vim.lsp.config('pyright', {
-  cmd = { 'pyright-langserver', '--stdio' },
-  filetypes = { 'python' },
-  root_markers = { 'pyproject.toml', 'setup.py', '.git' },
-  on_attach = function(client, bufnr)
-    vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-  end,
-})
-vim.lsp.enable({'ts_ls', 'pyright'})
-vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local opts = { buffer = args.buf }
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts)
-  end,
-})
+-- LSP (only works on older nvim versions where vim.lsp.config exists)
+if vim.lsp.config then
+  vim.lsp.config('ts_ls', {
+    cmd = { 'typescript-language-server', '--stdio' },
+    filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
+    root_markers = { 'tsconfig.json', 'package.json', '.git' },
+    on_attach = function(client, bufnr)
+      vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    end,
+  })
+  vim.lsp.config('pyright', {
+    cmd = { 'pyright-langserver', '--stdio' },
+    filetypes = { 'python' },
+    root_markers = { 'pyproject.toml', 'setup.py', '.git' },
+    on_attach = function(client, bufnr)
+      vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+    end,
+  })
+  vim.lsp.enable({'ts_ls', 'pyright'})
+  vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+  vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+      local opts = { buffer = args.buf }
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+      vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts)
+    end,
+  })
+end
 
 -- Treesitter
 require('nvim-treesitter').setup()
