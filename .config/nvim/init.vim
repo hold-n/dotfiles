@@ -131,7 +131,7 @@ endif
 " =============================================================================
 
 set updatetime=250
-set scrolloff=5
+set scrolloff=2
 set splitbelow
 set noswapfile
 set nobackup

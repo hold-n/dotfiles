@@ -13,6 +13,7 @@ alias bb="brazil-build"
 alias bbb="brazil-recursive-cmd --allPackages brazil-build"
 alias kiro="kiro-cli"
 alias pi='AWS_PROFILE=personal-bedrock AWS_REGION=eu-west-1 pi'
+alias cat=bat
 
 if [[ -x /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"

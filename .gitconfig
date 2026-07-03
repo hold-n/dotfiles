@@ -4,7 +4,7 @@
 [color]
 	ui = auto
 [core]
-	pager = less -FMRiX
+	pager = hunk pager
 [push]
 	default = simple
 [alias]
