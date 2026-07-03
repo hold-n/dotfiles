@@ -112,9 +112,11 @@ set softtabstop=4
 set autoindent
 set clipboard=unnamed
 set nowrap
-set foldmethod=expr
-set foldexpr=v:lua.vim.treesitter.foldexpr()
-set foldlevel=9999
+if !exists('g:vscode')
+  set foldmethod=expr
+  set foldexpr=v:lua.vim.treesitter.foldexpr()
+  set foldlevel=9999
+endif
 
 " =============================================================================
 " Search
@@ -164,8 +166,10 @@ nnoremap <leader>+ :vertical resize +10<CR>
 nnoremap <leader>e <C-^>
 
 " --- Search ---
-nnoremap n nzzzv
-nnoremap N Nzzzv
+if !exists('g:vscode')
+  nnoremap n nzzzv
+  nnoremap N Nzzzv
+endif
 
 if !exists('g:vscode')
   " --- Buffers ---
