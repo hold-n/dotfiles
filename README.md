@@ -6,7 +6,7 @@ The setup script only creates symlinks — it does not install any packages.
 
 ### Required
 
-- **zsh** + **[Oh My Zsh](https://ohmyz.sh/)** — must be installed *before* running `setup.sh` (see [Setup](#setup) for why)
+- **zsh** + **[Oh My Zsh](https://ohmyz.sh/)**
 - **git**
 - **[Neovim](https://neovim.io/) ≥ 0.10** — the config uses `nvim-treesitter` main branch which requires APIs added in 0.10 (`vim.fs.joinpath`, etc.). Ubuntu/Debian repos ship 0.9.x; install from [GitHub releases](https://github.com/neovim/neovim/releases) or the Neovim PPA instead
 - **C compiler** (gcc/clang) — needed by treesitter to compile parsers
@@ -28,15 +28,13 @@ See the full list in [`Brewfile`](Brewfile).
 
 ## Setup
 
-**Important:** Install Oh My Zsh *before* running `setup.sh`. The script creates `~/.oh-my-zsh/custom/` entries, and if that directory already exists, the Oh My Zsh installer will refuse with *"The $ZSH folder already exists"*.
-
-The repo must be cloned to `~/dotfiles` — the `.zshrc` has `ZSH_CUSTOM` hardcoded to that path.
+The repo can be cloned anywhere — `.zshrc` resolves the path to `ZSH_CUSTOM` from its own symlink target.
 
 ```bash
 # 1. Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# 2. Clone
+# 2. Clone (~/dotfiles is conventional but not required)
 git clone https://github.com/hold-n/dotfiles.git ~/dotfiles
 
 # 3. Symlink everything into $HOME
@@ -64,5 +62,5 @@ ln -s ~/dotfiles/.config/ghostty ~/.config/ghostty
 ## Notes
 
 - **`.gitconfig`** includes `~/.gitconfig-local` for machine-specific overrides (missing file is silently ignored by git)
-- **`.zshrc`** sets `ZSH_CUSTOM` to `~/dotfiles/.oh-my-zsh/custom`, so custom plugins and themes are loaded from the repo rather than from Oh My Zsh's own custom directory
+- **`.zshrc`** resolves its own symlink to find the repo and sets `ZSH_CUSTOM` to `<repo>/.oh-my-zsh/custom`, so custom plugins and themes are loaded from the repo rather than from Oh My Zsh's own custom directory. The repo can live anywhere
 - **macOS-specific configs** (Karabiner, Ghostty, Homebrew) are harmlessly symlinked on Linux — they just won't be used

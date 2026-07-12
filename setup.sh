@@ -4,7 +4,7 @@ shopt -s nullglob
 
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 BACKUP_DIR="$HOME/.dotfiles-backup/$(date +%Y%m%d_%H%M%S)"
-SKIP_PATTERNS=('.git' '.gitmodules' 'README.md' 'setup.sh' 'Brewfile')
+SKIP_PATTERNS=('.git' '.gitmodules' 'README.md' 'setup.sh' 'Brewfile' '.oh-my-zsh')
 
 should_skip() {
   local name="$1"
