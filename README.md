@@ -2,13 +2,13 @@ A collection of personal config files.
 
 ## Prerequisites
 
-These dotfiles assume certain tools are already installed. The setup script only creates symlinks — it does not install any packages.
+The setup script only creates symlinks — it does not install any packages.
 
 ### Required
 
-- **zsh** + **[Oh My Zsh](https://ohmyz.sh/)** — install Oh My Zsh *before* running `setup.sh`, otherwise the partial `~/.oh-my-zsh/custom/` directory it creates will cause the Oh My Zsh installer to refuse later
+- **zsh** + **[Oh My Zsh](https://ohmyz.sh/)** — must be installed *before* running `setup.sh` (see [Setup](#setup) for why)
 - **git**
-- **[Neovim](https://neovim.io/) ≥ 0.10** — the config uses `nvim-treesitter` main branch APIs (`vim.fs.joinpath`, etc.) that aren't available in 0.9.x. Ubuntu/Debian repos ship 0.9.x; install from [GitHub releases](https://github.com/neovim/neovim/releases) or the Neovim PPA instead
+- **[Neovim](https://neovim.io/) ≥ 0.10** — the config uses `nvim-treesitter` main branch which requires APIs added in 0.10 (`vim.fs.joinpath`, etc.). Ubuntu/Debian repos ship 0.9.x; install from [GitHub releases](https://github.com/neovim/neovim/releases) or the Neovim PPA instead
 - **C compiler** (gcc/clang) — needed by treesitter to compile parsers
 
 ### Recommended (from Brewfile)
@@ -19,8 +19,8 @@ On macOS, `brew bundle` installs everything. On Linux, install the equivalents m
 - **fd** — on Ubuntu it's `fdfind`; symlink: `sudo ln -s /usr/bin/fdfind /usr/local/bin/fd`
 - **fzf** — also auto-installed by vim-plug into `~/.fzf` on first `PlugInstall`
 - **ripgrep** (`rg`)
-- **tree-sitter CLI** — needed for treesitter parser compilation. Included in Brewfile as `tree-sitter-cli`; on Linux grab the binary from [releases](https://github.com/tree-sitter/tree-sitter/releases)
-- **hunk** — used as the git pager (`core.pager = hunk pager` in `.gitconfig`). If missing, git silently falls back to `less`
+- **tree-sitter CLI** — needed for treesitter parser compilation. On Linux, grab the binary from [releases](https://github.com/tree-sitter/tree-sitter/releases)
+- **hunk** — used as the git pager (`core.pager` in `.gitconfig`). If missing, git falls back to `less`
 - **gh** (GitHub CLI) — used for git credential helpers in `.gitconfig`
 - **mise**, **tmux**, **jq**, **htop**, **nnn**, **ranger**, **wget**, **tree**
 
@@ -28,14 +28,18 @@ See the full list in [`Brewfile`](Brewfile).
 
 ## Setup
 
+**Important:** Install Oh My Zsh *before* running `setup.sh`. The script creates `~/.oh-my-zsh/custom/` entries, and if that directory already exists, the Oh My Zsh installer will refuse with *"The $ZSH folder already exists"*.
+
+The repo must be cloned to `~/dotfiles` — the `.zshrc` has `ZSH_CUSTOM` hardcoded to that path.
+
 ```bash
-# 1. Install Oh My Zsh (if not already present)
+# 1. Install Oh My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# 2. Clone (submodules are initialized by the setup script)
+# 2. Clone
 git clone https://github.com/hold-n/dotfiles.git ~/dotfiles
 
-# 3. Run setup — symlinks everything into $HOME
+# 3. Symlink everything into $HOME
 ~/dotfiles/setup.sh
 
 # 4. Install Neovim plugins
@@ -59,6 +63,6 @@ ln -s ~/dotfiles/.config/ghostty ~/.config/ghostty
 
 ## Notes
 
-- **`.gitconfig`** includes `~/.gitconfig-local` for machine-specific overrides (missing file is silently ignored)
-- **`.zshrc`** sets `ZSH_CUSTOM` to `~/dotfiles/.oh-my-zsh/custom` so plugins/themes are loaded from the repo, not from Oh My Zsh's own custom dir
+- **`.gitconfig`** includes `~/.gitconfig-local` for machine-specific overrides (missing file is silently ignored by git)
+- **`.zshrc`** sets `ZSH_CUSTOM` to `~/dotfiles/.oh-my-zsh/custom`, so custom plugins and themes are loaded from the repo rather than from Oh My Zsh's own custom directory
 - **macOS-specific configs** (Karabiner, Ghostty, Homebrew) are harmlessly symlinked on Linux — they just won't be used
